@@ -66,7 +66,7 @@ public class DatabaseConnection {
 
             String url = "jdbc:mariadb://" + host + ":" + port + "/" + database + "?useSSL=" + useSSL;
 
-            logger.at(Level.INFO).log("Connecting to MariaDB database at " + host + ":" + port + "/" + database);
+            logger.at(Level.INFO).log("Connecting to MariaDB database: " + database + " at " + host + ":" + port);
             
             connection = DriverManager.getConnection(url, user, password);
             
