@@ -28,10 +28,13 @@ public class CharacterManager {
      * Loads or creates a character for a player when they join
      * @param playerId The player's UUID
      * @param playerName The player's name (used as default character name)
-     * @param location The player's spawn location (x, y, z, world)
+     * @param x X coordinate
+     * @param y Y coordinate
+     * @param z Z coordinate
+     * @param world World name
      * @return The loaded or newly created character
      */
-    public Character loadOrCreateCharacter(UUID playerId, String playerName, double[] location) {
+    public Character loadOrCreateCharacter(UUID playerId, String playerName, double x, double y, double z, String world) {
         // Try to find existing character(s) for this player
         var characters = repository.findByPlayer(playerId);
         
@@ -39,7 +42,7 @@ public class CharacterManager {
         if (characters.isEmpty()) {
             // Create new character
             logger.at(Level.INFO).log("Creating new character for player: " + playerName);
-            character = createNewCharacter(playerId, playerName, location);
+            character = createNewCharacter(playerId, playerName, x, y, z, world);
             
             if (repository.save(character)) {
                 logger.at(Level.INFO).log("New character created and saved for player: " + playerName);
@@ -55,15 +58,10 @@ public class CharacterManager {
             character.setLastPlayed(System.currentTimeMillis());
             
             // Update position to current spawn/login location
-            if (location != null && location.length >= 4) {
-                character.setPosX(location[0]);
-                character.setPosY(location[1]);
-                character.setPosZ(location[2]);
-                if (location.length > 3) {
-                    // World is passed as a string representation
-                    character.setWorld(String.valueOf((int)location[3]));
-                }
-            }
+            character.setPosX(x);
+            character.setPosY(y);
+            character.setPosZ(z);
+            character.setWorld(world);
         }
         
         // Store in memory
@@ -76,24 +74,23 @@ public class CharacterManager {
      * Creates a new character with default values
      * @param playerId The player's UUID
      * @param playerName The player's name
-     * @param location The initial spawn location
+     * @param x X coordinate
+     * @param y Y coordinate
+     * @param z Z coordinate
+     * @param world World name
      * @return The newly created character
      */
-    private Character createNewCharacter(UUID playerId, String playerName, double[] location) {
+    private Character createNewCharacter(UUID playerId, String playerName, double x, double y, double z, String world) {
         Character character = new Character();
         character.setPlayerId(playerId);
         character.setCharacterName(playerName);
         character.setCharacterClass("Adventurer"); // Default class
         
         // Set initial position
-        if (location != null && location.length >= 3) {
-            character.setPosX(location[0]);
-            character.setPosY(location[1]);
-            character.setPosZ(location[2]);
-            if (location.length > 3) {
-                character.setWorld(String.valueOf((int)location[3]));
-            }
-        }
+        character.setPosX(x);
+        character.setPosY(y);
+        character.setPosZ(z);
+        character.setWorld(world);
         
         return character;
     }

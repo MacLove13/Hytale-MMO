@@ -36,7 +36,7 @@ public class CharacterAutoSave {
             return;
         }
 
-        autoSaveTimer = new Timer("CharacterAutoSave", true); // daemon thread
+        autoSaveTimer = new Timer("CharacterAutoSave", false); // non-daemon thread for proper shutdown
         
         autoSaveTimer.scheduleAtFixedRate(new TimerTask() {
             @Override

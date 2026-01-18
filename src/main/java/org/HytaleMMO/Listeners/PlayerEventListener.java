@@ -35,10 +35,8 @@ public class PlayerEventListener {
         try {
             logger.at(Level.INFO).log("Player joining: " + playerName + " (" + playerId + ")");
             
-            double[] location = new double[]{spawnX, spawnY, spawnZ};
-            
             // Load or create character
-            var character = characterManager.loadOrCreateCharacter(playerId, playerName, location);
+            var character = characterManager.loadOrCreateCharacter(playerId, playerName, spawnX, spawnY, spawnZ, world);
             
             if (character != null) {
                 logger.at(Level.INFO).log("Character loaded for player: " + playerName + 
