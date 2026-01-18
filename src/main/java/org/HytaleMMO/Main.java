@@ -5,6 +5,7 @@ import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import org.HytaleMMO.Character.CharacterAutoSave;
 import org.HytaleMMO.Character.CharacterManager;
+import org.HytaleMMO.Events.MobDeathListener;
 import org.HytaleMMO.Database.DatabaseConnection;
 import org.HytaleMMO.Listeners.PlayerEventListener;
 
@@ -47,6 +48,11 @@ public class Main extends JavaPlugin {
 
     @Override
     protected void setup() {
+        // Register event listeners
+        this.getEventRegistry().registerListener(new MobDeathListener());
+        
+        logger.at(Level.INFO).log("MobDeathListener registered successfully");
+        
         // LOGGER.atInfo().log("Setting up plugin " + this.getName());
         // this.getCommandRegistry().registerCommand(new Claim());
     }
