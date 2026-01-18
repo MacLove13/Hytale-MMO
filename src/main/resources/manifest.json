@@ -1,0 +1,22 @@
+{
+    "Group": "HytaleMMO",
+    "Name": "HytaleMMO",
+    "Version": "0.0.1",
+    "Description": "An example plugin for HyTale!",
+    "Authors": [
+        {
+            "Name": "MacLove13"
+        }
+    ],
+    "Website": "example.org",
+    "ServerVersion": "*",
+    "Dependencies": {
+        
+    },
+    "OptionalDependencies": {
+        
+    },
+    "DisabledByDefault": false,
+    "Main": "org.HytaleMMO.Main",
+    "IncludesAssetPack": true
+}
