@@ -39,6 +39,12 @@ Event handler class with methods for:
 - `onPlayerDeath()` - Called when a player dies
 - Helper methods for updating position and health
 
+### HytaleEventBridge (`org.HytaleMMO.Listeners.HytaleEventBridge`)
+Example integration class that shows:
+- How to connect PlayerEventListener to actual Hytale events
+- Common patterns for event handling
+- Template methods that can be uncommented and adapted
+
 ### CharacterAutoSave (`org.HytaleMMO.Character.CharacterAutoSave`)
 Scheduled task that:
 - Runs every 10 minutes (configurable)
@@ -49,7 +55,9 @@ Scheduled task that:
 
 ⚠️ **Important**: The PlayerEventListener class contains handler methods that need to be connected to actual Hytale events.
 
-To complete the integration, you need to:
+### Quick Start
+
+A template class `HytaleEventBridge.java` has been provided with example integration patterns. To complete the integration:
 
 1. **Find the Hytale Event Classes**
    - Look for player join/login events (e.g., `PlayerJoinEvent`, `PlayerLoginEvent`)
