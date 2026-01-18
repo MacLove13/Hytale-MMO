@@ -31,20 +31,27 @@ public class MobDeathListener {
             // Get the entity that killed the mob
             LivingEntity killer = event.getKiller();
             
-            // Check if the killer is a player
-            if (killer instanceof Player) {
-                Player player = (Player) killer;
-                
-                // Get the mob's name or type for display
-                String mobName = mob.getType().getName();
-                
-                // Create and send a message to the player in Portuguese
-                Component message = Component.text("Você matou um ", NamedTextColor.GREEN)
-                    .append(Component.text(mobName, NamedTextColor.YELLOW))
-                    .append(Component.text("!", NamedTextColor.GREEN));
-                
-                player.sendMessage(message);
+            // Null check: ensure there is a killer and it's a player
+            if (killer == null || !(killer instanceof Player)) {
+                return;
             }
+            
+            Player player = (Player) killer;
+            
+            // Get the mob's name or type for display
+            // Null check: ensure mob type is available
+            if (mob.getType() == null) {
+                return;
+            }
+            
+            String mobName = mob.getType().getName();
+            
+            // Create and send a message to the player in Portuguese
+            Component message = Component.text("Você matou um ", NamedTextColor.GREEN)
+                .append(Component.text(mobName, NamedTextColor.YELLOW))
+                .append(Component.text("!", NamedTextColor.GREEN));
+            
+            player.sendMessage(message);
         }
     }
 }
