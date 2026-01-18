@@ -1,12 +1,14 @@
 package org.HytaleMMO.Database.Migrations;
 
+import com.hypixel.hytale.logger.HytaleLogger;
+
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import com.hypixel.hytale.logger.HytaleLogger;
 import java.util.logging.Level;
 
 public class MigrationManager {
@@ -42,12 +44,14 @@ public class MigrationManager {
      * Checks if a migration has already been executed
      */
     private boolean isMigrationExecuted(String migrationName) throws SQLException {
-        String sql = "SELECT COUNT(*) FROM migrations WHERE name = '" + migrationName + "'";
+        String sql = "SELECT COUNT(*) FROM migrations WHERE name = ?";
         
-        try (Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-            if (rs.next()) {
-                return rs.getInt(1) > 0;
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, migrationName);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
             }
         }
         return false;
@@ -57,11 +61,12 @@ public class MigrationManager {
      * Records that a migration has been executed
      */
     private void recordMigration(String migrationName) throws SQLException {
-        String sql = "INSERT INTO migrations (name, executed_at) VALUES ('" + 
-                migrationName + "', " + System.currentTimeMillis() + ")";
+        String sql = "INSERT INTO migrations (name, executed_at) VALUES (?, ?)";
         
-        try (Statement stmt = connection.createStatement()) {
-            stmt.executeUpdate(sql);
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, migrationName);
+            pstmt.setLong(2, System.currentTimeMillis());
+            pstmt.executeUpdate();
         }
     }
 
@@ -105,9 +110,10 @@ public class MigrationManager {
                 logger.at(Level.INFO).log("Rolling back migration: " + lastMigration.getName());
                 lastMigration.down(connection);
                 
-                String sql = "DELETE FROM migrations WHERE name = '" + lastMigration.getName() + "'";
-                try (Statement stmt = connection.createStatement()) {
-                    stmt.executeUpdate(sql);
+                String sql = "DELETE FROM migrations WHERE name = ?";
+                try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                    pstmt.setString(1, lastMigration.getName());
+                    pstmt.executeUpdate();
                 }
                 
                 logger.at(Level.INFO).log("Rollback completed: " + lastMigration.getName());

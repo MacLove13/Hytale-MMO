@@ -84,7 +84,7 @@ public class CharacterRepository {
             pstmt.setDouble(9, character.getPosY());
             pstmt.setDouble(10, character.getPosZ());
             pstmt.setString(11, character.getWorld());
-            pstmt.setLong(12, System.currentTimeMillis());
+            pstmt.setLong(12, character.getLastPlayed());
             pstmt.setInt(13, character.getId());
 
             int affectedRows = pstmt.executeUpdate();
