@@ -1,5 +1,6 @@
 package org.HytaleMMO.Commands;
 
+import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.server.api.command.Command;
 import com.hypixel.hytale.server.api.command.CommandContext;
 import com.hypixel.hytale.server.api.command.CommandSender;
@@ -7,6 +8,7 @@ import com.hypixel.hytale.server.api.entity.Player;
 import org.HytaleMMO.NPC.NpcHandler;
 
 import javax.annotation.Nonnull;
+import java.util.logging.Level;
 
 /**
  * Command to spawn an NPC at the player's location
@@ -14,10 +16,12 @@ import javax.annotation.Nonnull;
  */
 public class SpawnNPC extends Command {
     private final NpcHandler npcHandler;
+    private final HytaleLogger logger;
 
     public SpawnNPC(NpcHandler npcHandler) {
         super("spawnnpc");
         this.npcHandler = npcHandler;
+        this.logger = HytaleLogger.getLogger().getSubLogger("MMO-NPC");
         this.setDescription("Spawns an NPC at your location");
         this.setUsage("/spawnnpc <name>");
         this.setPermission("hytale.mmo.npc.spawn");
@@ -54,7 +58,9 @@ public class SpawnNPC extends Command {
             npcHandler.spawnNPC(player.getLocation(), npcName);
             player.sendMessage("NPC '" + npcName + "' spawned successfully!");
         } catch (Exception e) {
-            player.sendMessage("Failed to spawn NPC: " + e.getMessage());
+            // Log the full exception for debugging
+            logger.at(Level.SEVERE).withCause(e).log("Failed to spawn NPC '" + npcName + "' for player " + player.getName());
+            player.sendMessage("Failed to spawn NPC. Please check server logs for details.");
         }
     }
 }

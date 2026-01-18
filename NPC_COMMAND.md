@@ -9,7 +9,7 @@ This plugin adds the ability for administrators (OPs) to spawn NPCs that remain 
 Spawns an NPC at the player's current location.
 
 **Parameters:**
-- `<name>` - The display name for the NPC (required)
+- `<name>` - The display name for the NPC (required). Supports multi-word names separated by spaces.
 
 **Permission:** `hytale.mmo.npc.spawn`
 
@@ -28,6 +28,11 @@ This will spawn an NPC named "Merchant" at your current location.
 /spawnnpc Guard
 ```
 This will spawn an NPC named "Guard" at your current location.
+
+```
+/spawnnpc Village Guard
+```
+This will spawn an NPC named "Village Guard" at your current location. Multi-word names are fully supported!
 
 ## Features
 
