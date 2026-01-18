@@ -3,6 +3,8 @@ package org.HytaleMMO;
 import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
+import org.HytaleMMO.Commands.SpawnNPC;
+import org.HytaleMMO.NPC.NpcHandler;
 import org.HytaleMMO.Character.CharacterAutoSave;
 import org.HytaleMMO.Character.CharacterManager;
 import org.HytaleMMO.Events.MobDeathListener;
@@ -14,6 +16,7 @@ import javax.annotation.Nonnull;
 
 public class Main extends JavaPlugin {
     private HytaleLogger logger = HytaleLogger.getLogger().getSubLogger("MMO");
+    private NpcHandler npcHandler;
     private DatabaseConnection databaseConnection;
     private CharacterManager characterManager;
     private PlayerEventListener playerEventListener;
@@ -48,6 +51,19 @@ public class Main extends JavaPlugin {
 
     @Override
     protected void setup() {
+        logger.at(Level.INFO).log("Setting up plugin " + this.getName());
+        
+        // Initialize NPC Handler
+        this.npcHandler = new NpcHandler();
+        
+        // Register commands
+        this.getCommandRegistry().registerCommand(new SpawnNPC(npcHandler));
+        
+        logger.at(Level.INFO).log("NPC commands registered successfully!");
+    }
+
+    public NpcHandler getNpcHandler() {
+        return npcHandler;
         // Register event listeners
         this.getEventRegistry().registerListener(new MobDeathListener());
         
