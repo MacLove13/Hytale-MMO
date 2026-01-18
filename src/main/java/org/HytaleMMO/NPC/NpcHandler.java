@@ -5,11 +5,11 @@ import com.hypixel.hytale.server.api.entity.EntityType;
 import com.hypixel.hytale.server.api.world.Location;
 import com.hypixel.hytale.server.api.world.World;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.ArrayList;
 
 /**
  * Handles NPC spawning and management

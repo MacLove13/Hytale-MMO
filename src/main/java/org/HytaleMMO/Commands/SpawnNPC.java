@@ -39,14 +39,15 @@ public class SpawnNPC extends Command {
             return;
         }
 
-        // Get the NPC name from arguments
+        // Get the NPC name from arguments (support multi-word names)
         String[] args = context.getArgs();
         if (args.length < 1) {
             player.sendMessage("Usage: " + this.getUsage());
             return;
         }
 
-        String npcName = args[0];
+        // Join all arguments to support multi-word names
+        String npcName = String.join(" ", args);
 
         try {
             // Spawn the NPC at player's location
