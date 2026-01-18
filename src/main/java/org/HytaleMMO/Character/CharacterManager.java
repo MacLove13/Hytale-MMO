@@ -6,6 +6,7 @@ import org.HytaleMMO.Database.Tables.CharacterRepository;
 
 import java.sql.Connection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -36,7 +37,7 @@ public class CharacterManager {
      */
     public Character loadOrCreateCharacter(UUID playerId, String playerName, double x, double y, double z, String world) {
         // Try to find existing character(s) for this player
-        var characters = repository.findByPlayer(playerId);
+        List<Character> characters = repository.findByPlayer(playerId);
         
         Character character;
         if (characters.isEmpty()) {

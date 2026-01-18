@@ -36,7 +36,7 @@ public class PlayerEventListener {
             logger.at(Level.INFO).log("Player joining: " + playerName + " (" + playerId + ")");
             
             // Load or create character
-            var character = characterManager.loadOrCreateCharacter(playerId, playerName, spawnX, spawnY, spawnZ, world);
+            Character character = characterManager.loadOrCreateCharacter(playerId, playerName, spawnX, spawnY, spawnZ, world);
             
             if (character != null) {
                 logger.at(Level.INFO).log("Character loaded for player: " + playerName + 
@@ -100,7 +100,7 @@ public class PlayerEventListener {
             characterManager.updateCharacterPosition(playerId, deathX, deathY, deathZ, world);
             
             // Reset character health to max (respawn)
-            var character = characterManager.getCharacter(playerId);
+            Character character = characterManager.getCharacter(playerId);
             if (character != null) {
                 characterManager.updateCharacterHealth(playerId, character.getMaxHealth());
             }
