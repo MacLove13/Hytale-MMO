@@ -51,7 +51,13 @@ public class SpawnNPC extends Command {
         }
 
         // Join all arguments to support multi-word names
-        String npcName = String.join(" ", args);
+        String npcName = String.join(" ", args).trim();
+        
+        // Validate the name is not empty after trimming
+        if (npcName.isEmpty()) {
+            player.sendMessage("Usage: " + this.getUsage());
+            return;
+        }
 
         try {
             // Spawn the NPC at player's location

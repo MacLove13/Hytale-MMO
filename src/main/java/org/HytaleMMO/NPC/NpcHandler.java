@@ -38,7 +38,8 @@ public class NpcHandler {
         npc.setCustomName(name);
         npc.setCustomNameVisible(true);
         
-        // Make the NPC stationary (disable AI)
+        // Make the NPC stationary (disable AI/movement)
+        // Note: Method names may vary in actual Hytale API (e.g., setImmobile(), setMovementDisabled())
         npc.setAI(false);
         npc.setGravity(true);
         npc.setInvulnerable(true);
